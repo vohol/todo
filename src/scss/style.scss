@@ -1,0 +1,302 @@
+@import "nullstyle.scss";
+
+@mixin flex-row-center($justufy: space-between) {
+  display: flex;
+  align-items: center;
+  justify-content: $justufy;
+}
+
+.moon-icon-icon {
+  width: 20px;
+  height: 20px;
+  transition: all 0.3s;
+}
+
+.sun-icon-icon {
+  width: 20px;
+  height: 20px;
+  position: absolute;
+}
+
+.close-icon {
+  position: absolute;
+  width: 12px;
+  height: 12px;
+}
+
+@media screen and (min-width: 600px) {
+  .moon-icon-icon {
+    width: 26px;
+    height: 26px;
+  }
+
+  .sun-icon-icon {
+    width: 26px;
+    height: 26px;
+  }
+
+  .close-icon {
+    width: 18px;
+    height: 18px;
+  }
+
+}
+
+
+body {
+  font-family: 'Josefin Sans',
+    sans-serif;
+  font-weight: 400;
+}
+
+
+.container {
+  position: relative;
+  max-width: 540px;
+  width: 100%;
+  margin: 0 auto;
+}
+
+
+.title {
+  font-weight: 700;
+  font-size: 20px;
+  line-height: 1;
+  letter-spacing: 7.5px;
+  color: #fff;
+}
+
+
+.main-checkbox {
+  cursor: pointer;
+
+  &__check {
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: -1;
+  }
+
+  &__mark {
+    display: block;
+    position: relative;
+    width: 20px;
+    height: 20px;
+    background: transparent;
+    border: 1px solid var(--border-color);
+    border-radius: 50%;
+    transition: all 0.3s ease-in;
+
+    &::after {
+      content: '';
+      position: absolute;
+      height: 5px;
+      width: 10px;
+      top: 50%;
+      left: 50%;
+      display: none;
+      transition: all 0.3s ease-in-out;
+    }
+  }
+
+  &__check:checked~&__mark {
+    background: linear-gradient(135deg, #55DDFF 0%, #C058F3 100%);
+    border-color: transparent;
+    border-width: 0;
+  }
+
+  &__check:checked~&__mark::after {
+    display: block;
+    transform-origin: left bottom;
+    transform: translate(-20%, -20%) rotate(-45deg);
+    background: transparent;
+    border-left: 2px solid #fff;
+    border-bottom: 2px solid #fff;
+  }
+}
+
+@media screen and (min-width: 600px) {
+  .main-checkbox {
+    &__mark {
+      width: 24px;
+      height: 24px;
+    }
+
+    &::after {
+      height: 6px;
+      width: 12px;
+    }
+  }
+}
+
+
+.task-block {
+  max-width: 540px;
+  width: 100%;
+  min-height: 48px;
+  background-color: var(--task-bg);
+  padding: 0 20px 0;
+  @include flex-row-center(start);
+
+  &__checkbox {
+    margin-right: 12px;
+  }
+
+  &__text {
+    max-width: 100%;
+    width: 100%;
+    background: transparent;
+    color: var(--font-color);
+    transition: color 0.3s;
+    margin-right: 12px;
+  }
+
+  &__btn {
+    width: 20px;
+    height: 20px;
+    @include flex-row-center(center);
+    background: transparent;
+  }
+
+  &__icon {
+    fill: '#494C6B';
+    width: 12px;
+    height: 12px;
+  }
+}
+
+@media screen and (min-width: 600px) {
+  .task-block {
+    min-height: 64px;
+    padding: 0 24px 0;
+
+    &__checkbox {
+      margin-right: 24px;
+    }
+
+    &__text {
+      margin-right: 24px;
+    }
+
+    &__btn {
+      width: 24px;
+      height: 24px;
+    }
+
+    &__icon {
+      width: 12px;
+      height: 12px;
+    }
+  }
+
+}
+
+.new-task {
+  border-radius: 5px;
+  box-shadow: 0px 35px 50px -15px rgba(0, 0, 0, 0.5);
+
+  &__input::placeholder {
+    font-size: 18px;
+    line-height: 1;
+    letter-spacing: -0.25px;
+    color: var(--place-holder-color);
+  }
+}
+
+
+.todo {
+  min-height: 100vh;
+  transition: all 0.3s;
+
+  &__back {
+    height: 200px;
+    position: fixed;
+    object-fit: cover;
+    top: 0;
+    right: 0;
+    left: 0;
+    width: 100%;
+    transition: all 0.3s;
+  }
+
+  &[data-theme="night"] {
+    background-color: #171823;
+  }
+
+  &[data-theme="day"] {
+    background-color: #F2F2F2;
+  }
+
+
+  &[data-theme="day"] .moon-icon-icon {
+    visibility: hidden;
+    opacity: 0;
+  }
+
+  &[data-theme="night"] .sun-icon-icon {
+    visibility: hidden;
+    opacity: 0;
+  }
+
+  &[data-theme="day"] &__back {
+    background: linear-gradient(225deg, #5596FF 0%, #AC2DEB 100%);
+    content: url('@img/day-bg.png');
+  }
+
+  &[data-theme="night"] &__back {
+    background: linear-gradient(135deg, #3710BD 0%, #A42395 100%);
+    content: url('@img/night-bg.png');
+  }
+
+  &__container {
+    padding: 0 24px;
+    padding-top: 48px;
+  }
+
+  &__title {
+    margin-bottom: 40px;
+  }
+
+  &__theme-toggle {
+    position: absolute;
+    top: 48px;
+    right: 24px;
+    background: transparent;
+    width: 20px;
+    height: 20px;
+  }
+}
+
+
+
+@media screen and (min-width: 600px) {
+  .title {
+    font-size: 40px;
+    letter-spacing: 15px;
+  }
+
+  .todo {
+
+    &__back {
+      height: 300px;
+    }
+
+    &__container {
+      padding: 0;
+      padding-top: 70px;
+    }
+
+    &__title {
+      margin-bottom: 48px;
+    }
+
+    &__theme-toggle {
+      position: absolute;
+      top: 81px;
+      right: 0;
+      width: 26px;
+      height: 26px;
+    }
+  }
+
+}

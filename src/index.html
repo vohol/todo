@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+@@include('html/head.html',{
+"title":"title must be here"
+})
+
+<body>
+  @@include('html/header.html',{})
+  <main>
+    <section data-theme="day" class="todo">
+      <div class="todo__back">
+      </div>
+      <div class="container todo__container">
+        <h1 class="title todo__title">TODO</h1>
+        <button class="todo__theme-toggle">
+          <svg class="sun-icon-icon">
+            <use xlink:href="@img/icons/icons-multi.svg#sun-icon"></use>
+          </svg>
+          <svg class="moon-icon-icon">
+            <use xlink:href="@img/icons/icons-multi.svg#moon-icon"></use>
+          </svg>
+        </button>
+
+        <label class="task-block new-task todo__new-task">
+          <label class="main-checkbox task-block__checkbox">
+            <input type="checkbox" class="main-checkbox__check" name="" id="">
+            <span class="main-checkbox__mark"></span>
+          </label>
+          <input type="text" class="task-block__text new-task__input" id="new-task" placeholder="Create a new todo…">
+          <button class="task-block__btn">
+            <svg class="close-icon task-block__icon">
+              <use xlink:href="@img/icons/icons-mono.svg#close"></use>
+            </svg>
+          </button>
+        </label>
+
+        <ul class="task-manager">
+
+          <li class="task-manager__item-list">
+            <label class="task-block task-manager__task">
+              <label class="main-checkbox task-block__checkbox">
+                <input type="checkbox" class="main-checkbox__check" name="" id="">
+                <span class="main-checkbox__mark"></span>
+              </label>
+              <span class="task-block__text">do this task manager</span>
+              <button class="task-block__btn">
+                <svg class="close-icon task-block__icon">
+                  <use xlink:href="@img/icons/icons-mono.svg#close"></use>
+                </svg>
+              </button>
+            </label>
+          </li>
+
+        </ul>
+        <div>
+          dfjdskf</div>
+        <div></div>
+        <div class="menu">
+          <div class="menu__info">
+            <span class="menu__counter">5</span>
+            <span class="menu__text">items left</span>
+          </div>
+          <div class="menu__mid-btns">
+            <button class="menu__all">
+              All
+            </button>
+            <button class="menu__active">
+              Active
+            </button>
+            <button class="menu__completed">
+              Completed
+            </button>
+          </div>
+        </div>
+        <button class="menu__clear">
+          Clear completed
+        </button>
+        <span class="fyi">
+          Drag and drop to reorder list
+        </span>
+    </section>
+  </main>
+  @@include('html/footer.html',{})
+  <script src="js/app.min.js"></script>
+</body>
+
+</html>
