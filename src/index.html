@@ -27,8 +27,8 @@
             <span class="main-checkbox__mark"></span>
           </label>
           <input type="text" class="task-block__text new-task__input" id="new-task" placeholder="Create a new todo…">
-          <button class="task-block__btn">
-            <svg class="close-icon task-block__icon">
+          <button class="task-block__btn new-task__btn">
+            <svg class="close-icon task-block__icon new-task__icon">
               <use xlink:href="@img/icons/icons-mono.svg#close"></use>
             </svg>
           </button>
@@ -50,31 +50,42 @@
               </button>
             </label>
           </li>
+          <li class="task-manager__item-list">
+            <label class="task-block task-manager__task">
+              <label class="main-checkbox task-block__checkbox">
+                <input type="checkbox" class="main-checkbox__check" name="" id="">
+                <span class="main-checkbox__mark"></span>
+              </label>
+              <span class="task-block__text">do this task manager</span>
+              <button class="task-block__btn">
+                <svg class="close-icon task-block__icon">
+                  <use xlink:href="@img/icons/icons-mono.svg#close"></use>
+                </svg>
+              </button>
+            </label>
+          </li>
 
         </ul>
-        <div>
-          dfjdskf</div>
-        <div></div>
         <div class="menu">
           <div class="menu__info">
             <span class="menu__counter">5</span>
             <span class="menu__text">items left</span>
           </div>
           <div class="menu__mid-btns">
-            <button class="menu__all">
+            <button class="menu__all menu__btn">
               All
             </button>
-            <button class="menu__active">
+            <button class="menu__active menu__btn">
               Active
             </button>
-            <button class="menu__completed">
+            <button class="menu__completed menu__btn">
               Completed
             </button>
           </div>
+          <button class="menu__clear menu__btn">
+            Clear completed
+          </button>
         </div>
-        <button class="menu__clear">
-          Clear completed
-        </button>
         <span class="fyi">
           Drag and drop to reorder list
         </span>

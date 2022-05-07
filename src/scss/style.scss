@@ -1,10 +1,14 @@
 @import "nullstyle.scss";
 
+$color-blue: #3A7CFD;
+
+
 @mixin flex-row-center($justufy: space-between) {
   display: flex;
   align-items: center;
   justify-content: $justufy;
 }
+
 
 .moon-icon-icon {
   width: 20px;
@@ -12,11 +16,13 @@
   transition: all 0.3s;
 }
 
+
 .sun-icon-icon {
   width: 20px;
   height: 20px;
   position: absolute;
 }
+
 
 .close-icon {
   position: absolute;
@@ -24,7 +30,9 @@
   height: 12px;
 }
 
+
 @media screen and (min-width: 600px) {
+
   .moon-icon-icon {
     width: 26px;
     height: 26px;
@@ -39,13 +47,11 @@
     width: 18px;
     height: 18px;
   }
-
 }
 
 
 body {
-  font-family: 'Josefin Sans',
-    sans-serif;
+  font-family: "Josefin Sans", sans-serif;
   font-weight: 400;
 }
 
@@ -88,7 +94,7 @@ body {
     transition: all 0.3s ease-in;
 
     &::after {
-      content: '';
+      content: "";
       position: absolute;
       height: 5px;
       width: 10px;
@@ -100,7 +106,7 @@ body {
   }
 
   &__check:checked~&__mark {
-    background: linear-gradient(135deg, #55DDFF 0%, #C058F3 100%);
+    background: linear-gradient(135deg, #55ddff 0%, #c058f3 100%);
     border-color: transparent;
     border-width: 0;
   }
@@ -115,7 +121,9 @@ body {
   }
 }
 
+
 @media screen and (min-width: 600px) {
+
   .main-checkbox {
     &__mark {
       width: 24px;
@@ -159,11 +167,17 @@ body {
   }
 
   &__icon {
-    fill: '#494C6B';
+    fill: #494c6b;
     width: 12px;
     height: 12px;
+    transition: all 0.3s;
+  }
+
+  &__btn:hover &__icon {
+    fill: $color-blue;
   }
 }
+
 
 @media screen and (min-width: 600px) {
   .task-block {
@@ -188,8 +202,8 @@ body {
       height: 12px;
     }
   }
-
 }
+
 
 .new-task {
   border-radius: 5px;
@@ -201,6 +215,11 @@ body {
     letter-spacing: -0.25px;
     color: var(--place-holder-color);
   }
+
+  &__icon {
+    transform: rotate(45deg);
+  }
+
 }
 
 
@@ -224,9 +243,8 @@ body {
   }
 
   &[data-theme="day"] {
-    background-color: #F2F2F2;
+    background-color: #f2f2f2;
   }
-
 
   &[data-theme="day"] .moon-icon-icon {
     visibility: hidden;
@@ -239,13 +257,13 @@ body {
   }
 
   &[data-theme="day"] &__back {
-    background: linear-gradient(225deg, #5596FF 0%, #AC2DEB 100%);
-    content: url('@img/day-bg.png');
+    background: linear-gradient(225deg, #5596ff 0%, #ac2deb 100%);
+    content: url("@img/day-bg.png");
   }
 
   &[data-theme="night"] &__back {
-    background: linear-gradient(135deg, #3710BD 0%, #A42395 100%);
-    content: url('@img/night-bg.png');
+    background: linear-gradient(135deg, #3710bd 0%, #a42395 100%);
+    content: url("@img/night-bg.png");
   }
 
   &__container {
@@ -265,8 +283,11 @@ body {
     width: 20px;
     height: 20px;
   }
-}
 
+  &__new-task {
+    margin-bottom: 16px;
+  }
+}
 
 
 @media screen and (min-width: 600px) {
@@ -276,7 +297,6 @@ body {
   }
 
   .todo {
-
     &__back {
       height: 300px;
     }
@@ -297,6 +317,114 @@ body {
       width: 26px;
       height: 26px;
     }
+
+    &__new-task {
+      margin-bottom: 24px;
+    }
+  }
+}
+
+
+.menu {
+  max-width: 100%;
+  width: 100%;
+  min-height: 48px;
+  padding: 0 20px 0;
+  background: var(--task-bg);
+  box-shadow: var(--shadow);
+  border-radius: 0 0 5px 5px;
+  @include flex-row-center(space-between);
+  margin-bottom: 40px;
+  position: relative;
+
+  &__info {
+    color: var(--btn-text-color);
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 1;
+    letter-spacing: -0.194444px;
+    transition: color .3s;
   }
 
+  &__mid-btns {
+    position: absolute;
+    top: calc(16px + 48px);
+    left: 0;
+    max-width: 100%;
+    width: 100%;
+    min-height: 48px;
+    @include flex-row-center(center);
+    border-radius: 5px;
+    background: var(--task-bg);
+    box-shadow: var(--shadow);
+  }
+
+  &__mid-btns &__btn:not(:last-child) {
+    margin-right: 18px;
+  }
+
+  &__btn {
+    color: var(--btn-text-color);
+    background: transparent;
+    font-weight: 700;
+    font-size: 14px;
+    line-height: 1;
+    letter-spacing: -0.194444px;
+    transition: color .3s;
+
+    &:hover {
+      color: $color-blue;
+    }
+  }
+}
+
+
+@media screen and (min-width: 600px) {
+
+  .menu {
+    min-height: 50px;
+    padding: 0 24px 0;
+    margin-bottom: 49px;
+
+    &__mid-btns {
+      position: static;
+      top: calc(16px + 48px);
+      left: 0;
+      max-width: unset;
+      width: auto;
+      min-height: unset;
+      border-radius: unset;
+      background: transparent;
+      box-shadow: none;
+    }
+  }
+}
+
+
+.fyi {
+  display: block;
+  text-align: center;
+  color: var(--btn-text-color);
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 1;
+  letter-spacing: -0.194444px;
+}
+
+
+.task-manager {
+  max-height: 318px;
+  overflow: scroll;
+  border-radius: 5px 5px 0 0;
+
+  &__item-list {
+    border-bottom: 1px solid var(--border-color);
+  }
+}
+
+
+@media screen and (min-width: 600px) {
+  .task-manager {
+    max-height: 389px;
+  }
 }
