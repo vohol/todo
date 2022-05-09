@@ -1,4 +1,7 @@
-
+let allTasks;
+localStorage.getItem("storage")
+  ? (allTasks = JSON.parse(localStorage.getItem("storage")))
+  : (allTasks = [])
 
 //function for toggle themes for section
 export function newNightTheme(classOfSection) {
@@ -60,17 +63,20 @@ export function addTask(inputID, idMarker) {
     task: input.value,
     status: doneMarker.checked ? 'done' : 'active',
   }
-  addTaskToStorage(task)
-  input.value = ''
-  doneMarker.checked = false
-  parseTasksAndAddToTaskManager()
+  if (input.value) {
+
+    addTaskToStorage(task)
+    input.value = ''
+    doneMarker.checked = false
+    parseTasksAndAddToTaskManager()
+  } else {
+    alert(`You can't add empty task!`)
+  }
 }
 
 export function addTaskToStorage(newTask) {
-  let getAllTasks = JSON.parse(localStorage.getItem('storage'));
-  getAllTasks ? getAllTasks : getAllTasks = []
-  getAllTasks.push(newTask);
-  localStorage.setItem('storage', JSON.stringify(getAllTasks))
+  allTasks.push(newTask);
+  localStorage.setItem('storage', JSON.stringify(allTasks))
 }
 
 export function parseTasksAndAddToTaskManager() {
@@ -78,12 +84,11 @@ export function parseTasksAndAddToTaskManager() {
   const fyiText = document.querySelector('.fyi')
   const counter = document.querySelector('.menu__counter')
   const counterDesxription = document.querySelector('.menu__text')
-  let getAllTasks = JSON.parse(localStorage.getItem('storage'))
 
   const taskManager = document.querySelector('.task-manager')
   taskManager.innerHTML = ''
-  if (getAllTasks) {
-    const activeTasks = getAllTasks.filter(task => task.status == 'active')
+  if (allTasks) {
+    const activeTasks = allTasks.filter(task => task.status == 'active')
 
     switch (activeTasks.length) {
       case 0:
@@ -96,7 +101,7 @@ export function parseTasksAndAddToTaskManager() {
         counterDesxription.textContent = 'items left'
         break;
     }
-    let sortedAllTask = sortTasksById(getAllTasks)
+    let sortedAllTask = sortTasksById(allTasks)
     sortedAllTask.forEach(element => {
 
       let task = document.createElement("li");
@@ -143,7 +148,6 @@ function sortTasksById(array) {
 }
 
 export function toggleTaskStatus(domTaskItem, status) {
-  let getAllTasks = JSON.parse(localStorage.getItem('storage'))
   let newStatus;
 
   switch (status) {
@@ -157,10 +161,10 @@ export function toggleTaskStatus(domTaskItem, status) {
       break;
   }
 
-  let targetTask = getAllTasks.filter(task => task.id == domTaskItem.dataset.id)[0]
+  let targetTask = allTasks.filter(task => task.id == domTaskItem.dataset.id)[0]
 
-  let getAllTasksWithoutTarget = getAllTasks.filter(task => task.id != domTaskItem.dataset.id)
-  localStorage.setItem('storage', JSON.stringify(getAllTasksWithoutTarget))
+  let allTasksWithoutTarget = allTasks.filter(task => task.id != domTaskItem.dataset.id)
+  allTasks = allTasksWithoutTarget
 
   targetTask.status = newStatus
 
