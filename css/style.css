@@ -424,6 +424,10 @@ body {
 .task-manager__item-list {
   border-bottom: 1px solid var(--border-color);
 }
+.task-manager .done .task-block__text {
+  color: var(--btn-text-color);
+  text-decoration: line-through;
+}
 
 @media screen and (min-width: 600px) {
   .task-manager {
