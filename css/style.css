@@ -195,6 +195,7 @@ body {
   margin-right: 12px;
 }
 .task-block__text {
+  padding: 20px 0;
   max-width: 100%;
   width: 100%;
   background: transparent;
@@ -350,6 +351,9 @@ body {
   margin-bottom: 40px;
   position: relative;
 }
+.menu--hidden {
+  display: none;
+}
 .menu__info {
   color: var(--btn-text-color);
   font-weight: 400;
@@ -414,6 +418,9 @@ body {
   font-size: 14px;
   line-height: 1;
   letter-spacing: -0.194444px;
+}
+.fyi--hidden {
+  display: none;
 }
 
 .task-manager {
