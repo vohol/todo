@@ -1,3 +1,5 @@
+
+
 //function for toggle themes for section
 export function newNightTheme(classOfSection) {
   const section = document.querySelector(`.${classOfSection}`);
@@ -56,11 +58,11 @@ export function addTask(inputID, idMarker) {
   let task = {
     id: Date.now(),
     task: input.value,
-    status: doneMarker.checked ? Date.now() : 'active',
+    status: doneMarker.checked ? 'done' : 'active',
   }
-  console.log(task);
   addTaskToStorage(task)
   input.value = ''
+  doneMarker.checked = false
   parseTasksAndAddToTaskManager()
 }
 
@@ -68,89 +70,102 @@ export function addTaskToStorage(newTask) {
   let getAllTasks = JSON.parse(localStorage.getItem('storage'));
   getAllTasks ? getAllTasks : getAllTasks = []
   getAllTasks.push(newTask);
-  JSON.stringify(getAllTasks)
   localStorage.setItem('storage', JSON.stringify(getAllTasks))
 }
 
 export function parseTasksAndAddToTaskManager() {
-  let getAllTasks = JSON.parse(localStorage.getItem('storage'));
+  const menu = document.querySelector('.menu')
+  const fyiText = document.querySelector('.fyi')
+  const counter = document.querySelector('.menu__counter')
+  const counterDesxription = document.querySelector('.menu__text')
+  let getAllTasks = JSON.parse(localStorage.getItem('storage'))
 
   const taskManager = document.querySelector('.task-manager')
   taskManager.innerHTML = ''
+  if (getAllTasks) {
+    const activeTasks = getAllTasks.filter(task => task.status == 'active')
 
+    switch (activeTasks.length) {
+      case 0:
+        counterDesxription.textContent = 'Nothing to do'
+        break;
+      case 1:
+        counterDesxription.textContent = 'item left'
+        break;
+      default:
+        counterDesxription.textContent = 'items left'
+        break;
+    }
+    let sortedAllTask = sortTasksById(getAllTasks)
+    sortedAllTask.forEach(element => {
 
-  const activeTasks = getAllTasks.filter(task => task.status == 'active')
-  const doneTasks = getAllTasks.filter(task => task.status != 'active')
+      let task = document.createElement("li");
+      task.classList.add('task-manager__item-list')
+      task.dataset.id = element.id
 
-  const sortedActiveTasks = activeTasks.sort(function (a, b) {
-    return b.id - a.id;
+      let checkboxStatus = ''
+      if (element.status == 'done') {
+        task.classList.add('done')
+        checkboxStatus = 'checked'
+      }
+
+      task.innerHTML = `
+    <label class="task-block task-manager__task">
+      <label class="main-checkbox task-block__checkbox">
+        <input type="checkbox" class="main-checkbox__check" ${checkboxStatus}>
+        <span class="main-checkbox__mark"></span>
+      </label>
+      <span class="task-block__text">${element.task}</span>
+      <button class="task-block__btn">
+        <svg class="close-icon task-block__icon">
+          <use xlink:href="@img/icons/icons-mono.svg#close"></use>
+        </svg>
+      </button>
+    </label>
+    `;
+      taskManager.appendChild(task)
+    });
+
+    menu.classList.remove('menu--hidden')
+    fyiText.classList.remove('fyi--hidden')
+    counter.textContent = activeTasks.length ? activeTasks.length : '';
+  } else {
+    menu.classList.add('menu--hidden')
+    fyiText.classList.add('fyi--hidden')
+
+  }
+}
+
+function sortTasksById(array) {
+  return array.sort(function (a, b) {
+    return a.id - b.id;
   })
-  const SortedDoneTasks = doneTasks.sort(function (a, b) {
-    return b.status - a.status;
-  })
+}
 
-  sortedActiveTasks.forEach(element => {
+export function toggleTaskStatus(domTaskItem, status) {
+  let getAllTasks = JSON.parse(localStorage.getItem('storage'))
+  let newStatus;
 
-    let task = document.createElement("li");
-    task.classList.add('task-manager__item-list')
-    task.innerHTML = `
-  <label class="task-block task-manager__task">
-    <label class="main-checkbox task-block__checkbox">
-      <input type="checkbox" class="main-checkbox__check">
-      <span class="main-checkbox__mark"></span>
-    </label>
-    <span class="task-block__text">${element.task}</span>
-    <button class="task-block__btn">
-      <svg class="close-icon task-block__icon">
-        <use xlink:href="@img/icons/icons-mono.svg#close"></use>
-      </svg>
-    </button>
-  </label>
-  `;
-    taskManager.appendChild(task)
-  });
+  switch (status) {
+    case 'done':
+      domTaskItem.classList.remove('done')
+      newStatus = 'active'
+      break;
+    case 'active':
+      domTaskItem.classList.add('done')
+      newStatus = 'done'
+      break;
+  }
 
-  SortedDoneTasks.forEach(element => {
+  let targetTask = getAllTasks.filter(task => task.id == domTaskItem.dataset.id)[0]
 
-    let task = document.createElement("li");
-    task.classList.add('task-manager__item-list')
-    task.classList.add('done')
-    task.innerHTML = `
-  <label class="task-block task-manager__task">
-    <label class="main-checkbox task-block__checkbox">
-      <input type="checkbox" class="main-checkbox__check" checked>
-      <span class="main-checkbox__mark"></span>
-    </label>
-    <span class="task-block__text">${element.task}</span>
-    <button class="task-block__btn">
-      <svg class="close-icon task-block__icon">
-        <use xlink:href="@img/icons/icons-mono.svg#close"></use>
-      </svg>
-    </button>
-  </label>
-  `;
-    taskManager.appendChild(task)
-  });
+  let getAllTasksWithoutTarget = getAllTasks.filter(task => task.id != domTaskItem.dataset.id)
+  localStorage.setItem('storage', JSON.stringify(getAllTasksWithoutTarget))
 
+  targetTask.status = newStatus
 
-  //addding task
-  /*
-  const task = document.createElement("li");
-  task.classList.add('task-manager__item-list')
-  task.innerHTML = `
-  <label class="task-block task-manager__task">
-    <label class="main-checkbox task-block__checkbox">
-      <input type="checkbox" class="main-checkbox__check">
-      <span class="main-checkbox__mark"></span>
-    </label>
-    <span class="task-block__text">${task}</span>
-    <button class="task-block__btn">
-      <svg class="close-icon task-block__icon">
-        <use xlink:href="@img/icons/icons-mono.svg#close"></use>
-      </svg>
-    </button>
-  </label>
-  `;
-*/
+  addTaskToStorage(targetTask)
+  parseTasksAndAddToTaskManager()
+
 
 }
