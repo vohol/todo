@@ -28,6 +28,7 @@ export function setTheme(classOfSection) {
   let placeHolderColor;
   let btnTextColor;
   let shadow;
+  let hoverMenuBtns;
 
   switch (section.dataset.theme) {
     case "night":
@@ -36,7 +37,8 @@ export function setTheme(classOfSection) {
       borderColor = "#393A4B";
       placeHolderColor = "#767992";
       btnTextColor = "#5B5E7E";
-      shadow = '0px 35px 50px -15px rgba(0, 0, 0, 0.5)'
+      shadow = '0px 35px 50px -15px rgba(0, 0, 0, 0.5)';
+      hoverMenuBtns = "#fff";
       break;
     case "day":
       fontColor = "#000";
@@ -44,7 +46,8 @@ export function setTheme(classOfSection) {
       borderColor = "#E3E4F1";
       placeHolderColor = "#9495A5";
       btnTextColor = "#9495A5";
-      shadow = '0px 35px 50px -15px rgba(194, 195, 214, 0.5)'
+      shadow = '0px 35px 50px -15px rgba(194, 195, 214, 0.5)';
+      hoverMenuBtns = "#494C6B";
       break;
   }
   section.style.setProperty("--font-color", fontColor);
@@ -53,13 +56,14 @@ export function setTheme(classOfSection) {
   section.style.setProperty("--place-holder-color", placeHolderColor);
   section.style.setProperty("--btn-text-color", btnTextColor);
   section.style.setProperty("--shadow", shadow);
+  section.style.setProperty("--hover-memu-btn", hoverMenuBtns);
 }
 
 export function addTask(inputID, idMarker) {
   const input = document.getElementById(inputID)
   const doneMarker = document.getElementById(idMarker)
   let task = {
-    id: Date.now(),
+    id: allTasks.length + 1,
     task: input.value,
     status: doneMarker.checked ? 'done' : 'active',
   }
@@ -79,7 +83,7 @@ export function addTaskToStorage(newTask) {
   localStorage.setItem('storage', JSON.stringify(allTasks))
 }
 
-export function parseTasksAndAddToTaskManager() {
+export function parseTasksAndAddToTaskManager(array = allTasks) {
   const menu = document.querySelector('.menu')
   const fyiText = document.querySelector('.fyi')
   const counter = document.querySelector('.menu__counter')
@@ -87,8 +91,8 @@ export function parseTasksAndAddToTaskManager() {
 
   const taskManager = document.querySelector('.task-manager')
   taskManager.innerHTML = ''
-  if (allTasks) {
-    const activeTasks = allTasks.filter(task => task.status == 'active')
+  if (array) {
+    const activeTasks = array.filter(task => task.status == 'active')
 
     switch (activeTasks.length) {
       case 0:
@@ -101,8 +105,8 @@ export function parseTasksAndAddToTaskManager() {
         counterDesxription.textContent = 'items left'
         break;
     }
-    let sortedAllTask = sortTasksById(allTasks)
-    sortedAllTask.forEach(element => {
+    let sortedTask = sortTasksById(array)
+    sortedTask.forEach(element => {
 
       let task = document.createElement("li");
       task.classList.add('task-manager__item-list')
@@ -170,6 +174,33 @@ export function toggleTaskStatus(domTaskItem, status) {
 
   addTaskToStorage(targetTask)
   parseTasksAndAddToTaskManager()
+}
 
+
+export function filterTasks(status, array = allTasks) {
+  const filtredTasks = array.filter(task => task.status == status)
+  parseTasksAndAddToTaskManager(filtredTasks)
+}
+
+export function clearCompleted(array = allTasks) {
+  let tempArray = array.filter(task => task.status == 'active')
+  allTasks = tempArray
+  localStorage.setItem('storage', JSON.stringify(allTasks))
+  parseTasksAndAddToTaskManager()
+}
+
+export function changeId(taskItem, newId) {
+
+  let targetTask = allTasks.filter(task => task.id == taskItem.dataset.id)[0]
+
+  let allTasksWithoutTarget = allTasks.filter(task => task.id != taskItem.dataset.id)
+
+  allTasks = allTasksWithoutTarget
+  localStorage.setItem('storage', JSON.stringify(allTasks))
+
+  targetTask.id = newId
+
+  addTaskToStorage(targetTask)
+  parseTasksAndAddToTaskManager()
 
 }

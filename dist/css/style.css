@@ -388,8 +388,11 @@ body {
   letter-spacing: -0.194444px;
   transition: color 0.3s;
 }
-.menu__btn:hover {
+.menu__btn--active {
   color: #3A7CFD;
+}
+.menu__btn:hover {
+  color: var(--hover-memu-btn);
 }
 
 @media screen and (min-width: 600px) {
@@ -424,9 +427,10 @@ body {
 }
 
 .task-manager {
-  max-height: 318px;
+  height: 330px;
   overflow: scroll;
   border-radius: 5px 5px 0 0;
+  background-color: rgba(0, 0, 0, 0.08);
 }
 .task-manager__item-list {
   border-bottom: 1px solid var(--border-color);
@@ -438,6 +442,6 @@ body {
 
 @media screen and (min-width: 600px) {
   .task-manager {
-    max-height: 390px;
+    height: 389px;
   }
 }

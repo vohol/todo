@@ -379,8 +379,12 @@ body {
     letter-spacing: -0.194444px;
     transition: color .3s;
 
-    &:hover {
+    &--active {
       color: $color-blue;
+    }
+
+    &:hover {
+      color: var(--hover-memu-btn);
     }
   }
 }
@@ -424,9 +428,11 @@ body {
 
 
 .task-manager {
-  max-height: 318px;
+  height: 330px;
   overflow: scroll;
   border-radius: 5px 5px 0 0;
+  $color: var(--task-bg);
+  background-color: rgba(#000, 0.08);
 
   &__item-list {
     border-bottom: 1px solid var(--border-color);
@@ -445,6 +451,6 @@ body {
 
 @media screen and (min-width: 600px) {
   .task-manager {
-    max-height: 390px;
+    height: 389px;
   }
 }
