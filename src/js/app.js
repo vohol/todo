@@ -37,7 +37,8 @@ document.addEventListener('keyup', function (e) {
 
 document.addEventListener('click', function (e) {
 
-  if (e.target.closest('.task-manager__item-list')) {
+  //toggle status of task
+  if (e.target.closest('.task-manager__item-list') && !e.target.closest('.tabs-block__delete')) {
     let target = e.target.closest('.task-manager__item-list')
 
     switch (target.classList.contains('done')) {
@@ -49,40 +50,37 @@ document.addEventListener('click', function (e) {
         break;
     }
   }
+
+  //tabs for menu
+  if (e.target.classList.contains('menu__tabs')) {
+    mf.tabsHandler('menu__tabs', 'menu__btn--active', e.target)
+    mf.parseTasksAndAddToTaskManager()
+  }
+
+  //remove task
+  if (e.target.closest('.tabs-block__delete')) {
+    let target = e.target.closest('.task-manager__item-list')
+    mf.removeTask(target);
+  }
 })
 
-//filter all taskt
-const filerAll = document.querySelector('.menu__all')
-filerAll.addEventListener('click', () => {
-  mf.parseTasksAndAddToTaskManager()
-})
-//filter active taskt
-const filerActive = document.querySelector('.menu__active')
-filerActive.addEventListener('click', () => {
-  mf.filterTasks('active')
-})
-//filter completed taskt
-const filerCompleted = document.querySelector('.menu__completed')
-filerCompleted.addEventListener('click', () => {
-  mf.filterTasks('done')
-})
+
 //remove completer tasks
 const removeCompleted = document.querySelector('.menu__clear')
 removeCompleted.addEventListener('click', () => {
   mf.clearCompleted()
 })
 
-let tempId;
+
+let idBeforeTarget;
+let willInsertAfter;
 const taskList = document.getElementById('task-manager');
 const sortable = Sortable.create(taskList, {
   onMove: function (evt) {
-    tempId = evt.related.dataset.id - (evt.related.dataset.id - evt.related.previousElementSibling.dataset.id) / 2
-    // console.log(evt.related.dataset.id);
-    // console.log(evt.related.previousElementSibling.dataset.id);
-    // console.log(tempId);
+    idBeforeTarget = evt.related.dataset.id
+    willInsertAfter = evt.willInsertAfter;
   },
   onUpdate: function (evt) {
-    console.log(evt.item);
-    mf.changeId(evt.item, tempId)
+    mf.changeId(evt.item.dataset.id, idBeforeTarget, willInsertAfter)
   }
 });

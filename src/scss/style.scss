@@ -161,6 +161,7 @@ body {
   }
 
   &__btn {
+    padding: 20px;
     width: 20px;
     height: 20px;
     @include flex-row-center(center);
@@ -346,6 +347,7 @@ body {
 
   &__info {
     color: var(--btn-text-color);
+    min-width: 90px;
     font-weight: 400;
     font-size: 14px;
     line-height: 1;
@@ -438,8 +440,12 @@ body {
     border-bottom: 1px solid var(--border-color);
   }
 
-  .done {
+  &__task:hover {
+    cursor: pointer;
 
+  }
+
+  .done {
     .task-block__text {
       color: var(--btn-text-color);
       text-decoration: line-through;
