@@ -197,6 +197,7 @@ body {
     }
 
     &__btn {
+      position: relative;
       width: 24px;
       height: 24px;
     }
@@ -431,10 +432,28 @@ body {
 
 .task-manager {
   height: 330px;
-  overflow: scroll;
+  overflow: auto;
   border-radius: 5px 5px 0 0;
   $color: var(--task-bg);
   background-color: rgba(#000, 0.08);
+
+  &::-webkit-scrollbar {
+    width: 4px;
+  }
+
+  &::-webkit-scrollbar-track {
+    background: var(--task-bg);
+  }
+
+  /* Handle */
+  &::-webkit-scrollbar-thumb {
+    background: rgba($color-blue, 0.4);
+  }
+
+  /* Handle on hover */
+  &::-webkit-scrollbar-thumb:hover {
+    background: rgba($color-blue, 0.8);
+  }
 
   &__item-list {
     border-bottom: 1px solid var(--border-color);
