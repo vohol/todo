@@ -234,6 +234,7 @@ body {
     margin-right: 24px;
   }
   .task-block__btn {
+    position: relative;
     width: 24px;
     height: 24px;
   }
@@ -430,9 +431,23 @@ body {
 
 .task-manager {
   height: 330px;
-  overflow: scroll;
+  overflow: auto;
   border-radius: 5px 5px 0 0;
   background-color: rgba(0, 0, 0, 0.08);
+  /* Handle */
+  /* Handle on hover */
+}
+.task-manager::-webkit-scrollbar {
+  width: 4px;
+}
+.task-manager::-webkit-scrollbar-track {
+  background: var(--task-bg);
+}
+.task-manager::-webkit-scrollbar-thumb {
+  background: rgba(58, 124, 253, 0.4);
+}
+.task-manager::-webkit-scrollbar-thumb:hover {
+  background: rgba(58, 124, 253, 0.8);
 }
 .task-manager__item-list {
   border-bottom: 1px solid var(--border-color);
