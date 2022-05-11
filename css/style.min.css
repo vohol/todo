@@ -204,6 +204,7 @@ body {
   margin-right: 12px;
 }
 .task-block__btn {
+  padding: 20px;
   width: 20px;
   height: 20px;
   display: flex;
@@ -356,6 +357,7 @@ body {
 }
 .menu__info {
   color: var(--btn-text-color);
+  min-width: 90px;
   font-weight: 400;
   font-size: 14px;
   line-height: 1;
@@ -434,6 +436,9 @@ body {
 }
 .task-manager__item-list {
   border-bottom: 1px solid var(--border-color);
+}
+.task-manager__task:hover {
+  cursor: pointer;
 }
 .task-manager .done .task-block__text {
   color: var(--btn-text-color);
