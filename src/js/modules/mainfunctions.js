@@ -204,7 +204,6 @@ export function changeId(idTarget, idBeforeTarget, willInsertAfter) {
   let allTasksAfterTarget
   let allTasksWithoutTarget = allTasks.filter((task) => task.id != idTarget)
   let targetTask = allTasks.filter((task) => task.id == idTarget)[0]
-  console.log(willInsertAfter)
 
   switch (willInsertAfter) {
     case false:
@@ -225,9 +224,6 @@ export function changeId(idTarget, idBeforeTarget, willInsertAfter) {
       )
       break
   }
-
-  console.log(allTasksBeforeTarget)
-  console.log(allTasksAfterTarget)
 
   allTasks.length = 0
   allTasksBeforeTarget
@@ -250,7 +246,6 @@ export function changeId(idTarget, idBeforeTarget, willInsertAfter) {
     })
 
   allTasks.forEach((element) => {
-    console.log(element)
   })
   parseTasksAndAddToTaskManager()
 }
@@ -268,8 +263,6 @@ export function removeTask(targetTask) {
 
   let allTasksWithoutTarget = allTasks.filter((task) => task.id != targetTask.dataset.id)
   allTasks.length = 0
-  console.log(allTasksWithoutTarget);
-  console.log(allTasksWithoutTarget.length);
 
   if (allTasksWithoutTarget.length == 0) {
     localStorage.setItem('storage', JSON.stringify(allTasks))
