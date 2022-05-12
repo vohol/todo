@@ -1,11 +1,11 @@
 import * as dfltFunctions from "./modules/defaultFunctions.js";
 import * as mf from "./modules/mainfunctions.js";
 
-
 dfltFunctions.isWebp();
 
 document.addEventListener('DOMContentLoaded', function () {
   //load default values
+  mf.checkThemeFromStorage('todo')
   mf.setTheme('todo')
   mf.parseTasksAndAddToTaskManager()
 })
@@ -14,7 +14,7 @@ document.addEventListener('DOMContentLoaded', function () {
 //toggle themes
 const themeToggle = document.querySelector('.todo__theme-toggle')
 themeToggle.addEventListener('click', function () {
-  mf.newNightTheme('todo')
+  mf.toggleTheme('todo')
   mf.setTheme('todo')
 })
 

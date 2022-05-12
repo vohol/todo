@@ -4,7 +4,7 @@ localStorage.getItem('storage')
   : (allTasks = [])
 
 //function for toggle themes for section
-export function newNightTheme(classOfSection) {
+export function toggleTheme(classOfSection) {
   const section = document.querySelector(`.${classOfSection}`)
   let newTheme
 
@@ -17,6 +17,16 @@ export function newNightTheme(classOfSection) {
       break
   }
   section.dataset.theme = newTheme
+}
+
+export function checkThemeFromStorage(classOfSection) {
+  const section = document.querySelector(`.${classOfSection}`)
+  let theme;
+  localStorage.getItem('theme')
+    ? (theme = localStorage.getItem('theme'))
+    : (theme = null)
+
+  theme ? section.dataset.theme = theme : false
 }
 
 //function to set theme for section
@@ -57,6 +67,8 @@ export function setTheme(classOfSection) {
   section.style.setProperty('--btn-text-color', btnTextColor)
   section.style.setProperty('--shadow', shadow)
   section.style.setProperty('--hover-memu-btn', hoverMenuBtns)
+
+  localStorage.setItem('theme', section.dataset.theme)
 }
 
 
